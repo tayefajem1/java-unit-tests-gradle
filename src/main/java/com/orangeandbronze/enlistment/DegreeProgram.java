@@ -30,10 +30,11 @@ class DegreeProgram {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DegreeProgram that)) return false;
+        if (!(o instanceof DegreeProgram)) return false;
 
-        if (!subjects.equals(that.subjects)) return false;
-        return Objects.equals(programName, that.programName);
+        DegreeProgram degreeProgram = (DegreeProgram) o;
+        if (!subjects.equals(degreeProgram.subjects)) return false;
+        return Objects.equals(programName, degreeProgram.programName);
     }
 
     @Override

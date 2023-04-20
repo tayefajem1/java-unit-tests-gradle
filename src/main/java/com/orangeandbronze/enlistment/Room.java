@@ -28,7 +28,9 @@ public class Room {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Room room)) return false;
+        if (!(o instanceof Room)) return false;
+
+        Room room = (Room)o;
         return capacity == room.capacity && roomName.equals(room.roomName);
     }
 
