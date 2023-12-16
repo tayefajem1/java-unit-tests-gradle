@@ -1,11 +1,13 @@
 package com.orangeandbronze.enlistment;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.Test;
+
 public class PeriodTest {
 
     @Test
-    void check_valid_periods(){
+    public void check_valid_periods(){
         //Given 4 valid periods
         //When they are initialized
         //No exception is thrown
@@ -18,7 +20,7 @@ public class PeriodTest {
     }
 
     @Test
-    void check_invalid_periods(){
+    public void check_invalid_periods(){
         assertThrows(IllegalArgumentException.class, ()->{
             //Given 4 periods that are invalid: invalid start time, invalid end time, valid increment, invalid period
             Period period1 = new Period(815, 1030);

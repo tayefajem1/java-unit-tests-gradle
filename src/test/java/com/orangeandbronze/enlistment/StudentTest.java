@@ -1,12 +1,15 @@
 package com.orangeandbronze.enlistment;
 
 import com.orangeandbronze.enlistment.exceptions.*;
-import org.junit.jupiter.api.*;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static com.orangeandbronze.enlistment.Days.*;
 
 public class StudentTest {
@@ -23,7 +26,7 @@ public class StudentTest {
     static final DegreeProgram DEFAULT_PROGRAM = new DegreeProgram("CCS", new ArrayList<Subject>() {{add(CCPROG1); add(MTH101A); add(CCPROG2); add(CSARCH2); add(LBYARCH); add(STSWENG); add(LBYPROG); add(CCICOMP);}});
 
     @Test
-    void enlist_2_sections_no_conflict(){
+    public void enlist_2_sections_no_conflict(){
         //Given 1 student & 2 sections w/o conflict
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -40,7 +43,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_2_same_schedule(){
+    public void enlist_2_same_schedule(){
         //Given 1 student & 2 sections w/o conflict
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -52,7 +55,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_under_room_capacity(){
+    public void enlist_under_room_capacity(){
         Student student1 = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Student student2 = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -66,7 +69,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_over_room_capacity(){
+    public void enlist_over_room_capacity(){
         Student student1 = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Student student2 = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Student student3 = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
@@ -77,7 +80,7 @@ public class StudentTest {
     }
 
     @Test
-    void cancel_enlisted_section(){
+    public void cancel_enlisted_section(){
         //Given student who enlisted in sec1
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, DEFAULT_ROOM, new Subject("CCPROG1", 3));
@@ -94,7 +97,7 @@ public class StudentTest {
     }
 
     @Test
-    void cancel_non_enlisted_section(){
+    public void cancel_non_enlisted_section(){
         //Given student who did not enlist in sec1
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, DEFAULT_ROOM, new Subject("CCPROG1", 3));
@@ -110,7 +113,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_2_sections_different_subjects() {
+    public void enlist_2_sections_different_subjects() {
         //Given 1 student & 2 sections w/ different subject offering
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -127,7 +130,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_2_sections_same_subjects(){
+    public void enlist_2_sections_same_subjects(){
         //Given 1 student & 2 sections w/ the same subject
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -139,7 +142,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_pre_req_not_met(){
+    public void enlist_pre_req_not_met(){
         //Given a section whose subject has a pre-requisite
         Section sec1 = new Section("A", DEFAULT_SCHEDULE, DEFAULT_ROOM, CCPROG2);
 
@@ -152,7 +155,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_pre_req_taken(){
+    public void enlist_pre_req_taken(){
         //Given a section whose subject has a pre-requisite
         Subject CCPROG1 = new Subject("CCPROG1", 3);
         HashSet<Subject> CCPROG2PreReq = new HashSet<>();
@@ -175,7 +178,7 @@ public class StudentTest {
     }
 
     @Test
-    void check_assessment(){
+    public void check_assessment(){
         //Given 1 student who enlists in multiple sections
         Section sec1 = new Section("A", new Schedule(MTH, new Period(1000, 1030)), new Room("A1", 2), new Subject("CCPROG1", 3, false));
         Section sec2 = new Section("B", new Schedule(TF,  new Period(1600, 1630)), new Room("A2", 2), new Subject("CSARCH2", 3, false));
@@ -204,7 +207,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_overlapping_schedules(){
+    public void enlist_overlapping_schedules(){
         //Given a student and two sections of overlapping schedules
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", new Schedule(MTH, new Period(830, 1200)), new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -217,7 +220,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_different_days_same_time(){
+    public void enlist_different_days_same_time(){
         //Given a student and two sections of overlapping schedules
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", new Schedule(MTH, new Period(830, 1200)), new Room("A1", 2), new Subject("CCPROG1", 3));
@@ -234,7 +237,7 @@ public class StudentTest {
         );
     }
     @Test
-    void enlist_not_over_max_units (){
+    public void enlist_not_over_max_units (){
         //Given a student and 2 sections where both sections, when enlisted, will not exceed the maximum units allowed
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", new Schedule(MTH, new Period(830, 1200)), new Room("A1", 2), new Subject("CCPROG1", 2));
@@ -253,7 +256,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_over_max_units (){
+    public void enlist_over_max_units (){
         //Given a student and 2 sections where both sections, when enlisted, will exceed the maximum units allowed
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", new Schedule(MTH, new Period(830, 1200)), new Room("A1", 2), new Subject("CCPROG1", 22));
@@ -267,7 +270,7 @@ public class StudentTest {
     }
 
     @Test
-    void same_room_overlapping_schedule(){
+    public void same_room_overlapping_schedule(){
         // Given 2 sections with the same room and same schedule
         Section sec1 = new Section("A", new Schedule(MTH, new Period(830, 1200)), new Room("A1", 2), new Subject("CCPROG1", 3));
         Section sec2 = new Section("B", new Schedule(MTH, new Period(830, 1000)), new Room("A1", 2), new Subject("CCICOMP", 3));
@@ -277,7 +280,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_subject_in_program(){
+    public void enlist_subject_in_program(){
         //Given a student in a specific program and a section whose subject is in the said program
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", new Schedule(MTH, new Period(1000, 1030)), new Room("A1", 2), new Subject("CCPROG1", 3, false));
@@ -292,7 +295,7 @@ public class StudentTest {
     }
 
     @Test
-    void enlist_subject_not_in_program(){
+    public void enlist_subject_not_in_program(){
         //Given a student in a specific program and a section whose subject si not in the said program
         Student student = new Student(1, Collections.emptyList(), DEFAULT_PROGRAM);
         Section sec1 = new Section("A", new Schedule(MTH, new Period(1000, 1030)), new Room("A1", 2), new Subject("ABCDEFG", 3, false));
