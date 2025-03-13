@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/my-repo/my-java-app.git' // Change to your repo
+                git 'https://github.com/HandsOnDevOpsTraining/java-unit-tests-gradle.git' // Change to your repo
             }
         }
         
